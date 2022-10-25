@@ -26,6 +26,7 @@ data class RedditPostData(
     @SerializedName("subreddit") val subreddit: String,
     @SerializedName("name") val name: String,
     @SerializedName("title") val title: String,
+    @SerializedName("selftext") val selftext: String,
     @SerializedName("ups") val ups: Int,
     @SerializedName("thumbnail") val thumbnail: String,
     @SerializedName("permalink") val url: String,
