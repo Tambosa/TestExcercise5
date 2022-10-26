@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface RedditFeedApi {
-    @GET("r/popular/new.json")
+    @GET("r/funny/hot.json")
     fun getRedditPopularFeed(
         @Query("limit") limit: Int,
         @Query("after") after: String?,

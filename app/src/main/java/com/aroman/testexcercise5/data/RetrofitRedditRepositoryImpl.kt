@@ -9,6 +9,8 @@ class RetrofitRedditRepositoryImpl(private val api: RedditFeedApi) : RedditRepos
     override fun getPopularMovies(
         key: PageKey
     ): Call<PagedResponse> {
-        return api.getRedditPopularFeed(key.limit, key.after, key.count)
+        return api.getRedditPopularFeed(
+            limit = key.limit, after = key.after, count = key.count
+        )
     }
 }
