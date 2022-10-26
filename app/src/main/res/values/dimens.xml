@@ -6,4 +6,6 @@
     <dimen name="text_size_small">12sp</dimen>
     <dimen name="text_size_medium">18sp</dimen>
     <dimen name="card_view_padding">8dp</dimen>
+    <dimen name="text_size_large">24sp</dimen>
+    <dimen name="recycler_margin_vertical">30dp</dimen>
 </resources>

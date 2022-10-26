@@ -7,13 +7,28 @@
     android:background="@color/background_dark"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/main_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/recycler_element_marin"
+        android:text="@string/r_popular"
+        android:textAlignment="center"
+        android:textColor="@color/text_color_white"
+        android:textSize="@dimen/text_size_large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/reddit_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/recycler_margin_vertical"
+        android:paddingTop="@dimen/recycler_margin_vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_title"
         tools:listitem="@layout/item_reddit_post" />
 </androidx.constraintlayout.widget.ConstraintLayout>
