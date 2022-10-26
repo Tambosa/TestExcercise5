@@ -1,5 +1,7 @@
 package com.aroman.testexcercise5.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +12,7 @@ import com.aroman.testexcercise5.data.RetrofitRedditRepositoryImpl
 import com.aroman.testexcercise5.databinding.ActivityMainBinding
 import com.aroman.testexcercise5.domain.PageKey
 
+
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val viewModel = MainActivityViewModel(
@@ -17,7 +20,9 @@ class MainActivity : AppCompatActivity() {
             RetrofitClient().provideRetrofit().create(RedditFeedApi::class.java)
         )
     )
-    private val redditPostsAdapter = RedditPostsAdapter()
+    private val redditPostsAdapter = RedditPostsAdapter { position ->
+        onItemClick(position)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,5 +37,13 @@ class MainActivity : AppCompatActivity() {
             redditPostsAdapter.addData(it.data.children)
         }
         viewModel.getPage(PageKey(10, null, 10))
+    }
+
+    private fun onItemClick(position: Int) {
+        val browserIntent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("https://www.reddit.com" + redditPostsAdapter.getData()[position].data.url)
+        )
+        startActivity(browserIntent)
     }
 }
