@@ -32,4 +32,20 @@ data class RedditPostData(
     @SerializedName("thumbnail") val thumbnail: String,
     @SerializedName("permalink") val url: String,
     @SerializedName("num_comments") val comments: Int,
+    @SerializedName("preview") val preview: ImagePreview,
+) : Parcelable
+
+@Parcelize
+data class ImagePreview(
+    @SerializedName("images") val listImage: List<RedditImage>
+) : Parcelable
+
+@Parcelize
+data class RedditImage(
+    @SerializedName("source") val source: ImageDetails
+) : Parcelable
+
+@Parcelize
+data class ImageDetails(
+    @SerializedName("url") val url: String
 ) : Parcelable

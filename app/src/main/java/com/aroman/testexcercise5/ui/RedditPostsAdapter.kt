@@ -1,5 +1,6 @@
 package com.aroman.testexcercise5.ui
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -41,10 +42,17 @@ class RedditPostsAdapter(private val onItemClick: (position: Int) -> Unit) :
         fun bind(item: RedditPost) = with(binding) {
             title.text = item.data.title
             selftext.text = item.data.selftext
-            postImage.load(item.data.thumbnail)
+            val imageUrl = try {
+                item.data.preview.listImage[0].source.url.replace("amp;", "")
+            } catch (e: Exception) {
+                Log.d("@@@", e.message.toString())
+                item.data.thumbnail
+            }
+            postImage.load(imageUrl)
             author.text = "Posted by u/" + item.data.author
             ups.text = item.data.ups.toString()
             subreddit.text = "r/" + item.data.subreddit
+            numberOfComments.text = item.data.comments.toString()
         }
     }
 }

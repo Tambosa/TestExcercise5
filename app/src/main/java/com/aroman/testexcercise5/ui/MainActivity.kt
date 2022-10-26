@@ -7,20 +7,14 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.aroman.testexcercise5.data.RedditFeedApi
-import com.aroman.testexcercise5.data.RetrofitClient
-import com.aroman.testexcercise5.data.RetrofitRedditRepositoryImpl
 import com.aroman.testexcercise5.databinding.ActivityMainBinding
 import com.aroman.testexcercise5.domain.PageKey
-
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val viewModel = MainActivityViewModel(
-        RetrofitRedditRepositoryImpl(
-            RetrofitClient().provideRetrofit().create(RedditFeedApi::class.java)
-        )
-    )
+    private val viewModel: MainActivityViewModel by viewModel()
+
     private val redditPostsAdapter = RedditPostsAdapter { position ->
         onItemClick(position)
     }
