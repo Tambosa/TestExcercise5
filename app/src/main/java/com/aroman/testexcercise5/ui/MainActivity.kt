@@ -24,6 +24,8 @@ class MainActivity : AppCompatActivity() {
     private val redditPostsAdapter = RedditPostsAdapter { position ->
         onItemClick(position)
     }
+    private var isLoading = false
+    private var after: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +40,8 @@ class MainActivity : AppCompatActivity() {
         viewModel.pageList.observe(this) {
             Log.d("@@@", it.data.children.toString())
             redditPostsAdapter.addData(it.data.children)
+            after = it.data.after
+            isLoading = false
         }
         viewModel.getPage(getStartKey())
     }
@@ -52,20 +56,24 @@ class MainActivity : AppCompatActivity() {
                 val totalItemCount = layoutManager.itemCount
                 val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
 
-                if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
-                    loadNextPage()
+                if (!isLoading) {
+                    if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0 && totalItemCount >= TOTAL_PAGES) {
+                        isLoading = true
+                        loadNextPage()
+                    }
                 }
             }
         })
     }
 
     private fun loadNextPage() {
-        viewModel.getPage(getNextKey())
+        val nextKey = getNextKey()
+        viewModel.getPage(nextKey)
     }
 
     private fun getStartKey() = PageKey(10, null, 10)
 
-    private fun getNextKey() = PageKey(10, redditPostsAdapter.getData().last().data.name, 10)
+    private fun getNextKey() = PageKey(10, after, 10)
 
     private fun onItemClick(position: Int) {
         val browserIntent = Intent(
@@ -73,5 +81,9 @@ class MainActivity : AppCompatActivity() {
             Uri.parse("https://www.reddit.com" + redditPostsAdapter.getData()[position].data.url)
         )
         startActivity(browserIntent)
+    }
+
+    companion object {
+        const val TOTAL_PAGES = 5
     }
 }

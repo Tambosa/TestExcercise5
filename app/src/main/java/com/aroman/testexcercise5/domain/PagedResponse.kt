@@ -30,7 +30,6 @@ data class RedditPostData(
     @SerializedName("selftext") val selftext: String,
     @SerializedName("ups") val ups: Int,
     @SerializedName("thumbnail") val thumbnail: String,
-    @SerializedName("url_overridden_by_dest") val fullImage: String,
     @SerializedName("permalink") val url: String,
     @SerializedName("num_comments") val comments: Int,
 ) : Parcelable

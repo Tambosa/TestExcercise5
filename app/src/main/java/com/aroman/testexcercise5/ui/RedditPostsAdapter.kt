@@ -42,9 +42,9 @@ class RedditPostsAdapter(private val onItemClick: (position: Int) -> Unit) :
             title.text = item.data.title
             selftext.text = item.data.selftext
             postImage.load(item.data.thumbnail)
-            author.text = item.data.author
+            author.text = "Posted by u/" + item.data.author
             ups.text = item.data.ups.toString()
-            subreddit.text = item.data.subreddit
+            subreddit.text = "r/" + item.data.subreddit
         }
     }
 }
