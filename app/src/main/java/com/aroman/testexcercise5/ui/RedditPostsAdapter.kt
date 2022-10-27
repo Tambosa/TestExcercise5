@@ -27,6 +27,8 @@ class RedditPostsAdapter(
 
     fun getData() = data
 
+    fun clearData() = data.clear()
+
     override fun onBindViewHolder(holder: RedditPostViewHolder, position: Int) {
         holder.bind(data[position])
         holder.itemView.setOnClickListener { onItemClick(position) }
@@ -69,7 +71,7 @@ class RedditPostsAdapter(
             if (item.isSaved) {
                 buttonSave.text = "saved"
                 buttonSave.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FF5700"))
-            } else{
+            } else {
                 buttonSave.text = "save"
                 buttonSave.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#A5A4A4"))
                 buttonSave.setOnClickListener { onSaveButtonClick(adapterPosition) }

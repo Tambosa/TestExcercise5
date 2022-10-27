@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,6 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         initRecyclerView()
         initViewModel()
+        initOnOffButtons()
     }
 
     private fun initViewModel() {
@@ -90,6 +92,28 @@ class MainActivity : AppCompatActivity() {
         redditPostsAdapter.getData()[position].isSaved = true
         redditPostsAdapter.notifyItemChanged(position)
         viewModel.savePost(redditPostsAdapter.getData()[position])
+    }
+
+    private fun initOnOffButtons() {
+        binding.buttonLocal.setOnClickListener {
+            Log.d("@@@", "buttonLocal: ")
+            redditPostsAdapter.clearData()
+            viewModel.getLocalPage()
+            it.isEnabled = false
+            it.visibility = View.INVISIBLE
+            binding.buttonRemote.isEnabled = true
+            binding.buttonRemote.visibility = View.VISIBLE
+        }
+
+        binding.buttonRemote.setOnClickListener {
+            Log.d("@@@", "buttonRemote: ")
+            redditPostsAdapter.clearData()
+            viewModel.getPage(getStartKey())
+            it.isEnabled = false
+            it.visibility = View.INVISIBLE
+            binding.buttonLocal.isEnabled = true
+            binding.buttonLocal.visibility = View.VISIBLE
+        }
     }
 
     companion object {

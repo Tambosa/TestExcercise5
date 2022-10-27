@@ -16,6 +16,16 @@ class MainActivityViewModel(
     private val _liveData: MutableLiveData<PagedResponse> = MutableLiveData()
     val pageList: LiveData<PagedResponse> = _liveData
 
+    fun getLocalPage() {
+        viewModelCoroutineScope.launch { susGetLocalPage() }
+    }
+
+    private suspend fun susGetLocalPage() {
+        withContext(Dispatchers.IO) {
+            _liveData.postValue(PagedResponse(RedditData("", localRepo.getAll(), "")))
+        }
+    }
+
     fun getPage(pageKey: PageKey) {
         viewModelCoroutineScope.launch { susGetPage(pageKey) }
     }
