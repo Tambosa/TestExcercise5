@@ -1,4 +1,4 @@
-package com.aroman.testexcercise5.domain
+package com.aroman.testexcercise5.domain.entities
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

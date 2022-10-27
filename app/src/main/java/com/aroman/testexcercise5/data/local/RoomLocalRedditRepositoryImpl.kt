@@ -1,6 +1,7 @@
 package com.aroman.testexcercise5.data.local
 
 import com.aroman.testexcercise5.domain.*
+import com.aroman.testexcercise5.domain.entities.*
 
 class RoomLocalRedditRepositoryImpl(private val dao: RedditPostDao) : LocalRedditRepository {
     override suspend fun savePost(post: RedditPost) {

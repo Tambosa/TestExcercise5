@@ -4,6 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.aroman.testexcercise5.domain.*
+import com.aroman.testexcercise5.domain.entities.PageKey
+import com.aroman.testexcercise5.domain.entities.PagedResponse
+import com.aroman.testexcercise5.domain.entities.RedditData
+import com.aroman.testexcercise5.domain.entities.RedditPost
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback

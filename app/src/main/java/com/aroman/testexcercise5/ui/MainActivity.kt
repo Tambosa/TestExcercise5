@@ -9,8 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.aroman.testexcercise5.databinding.ActivityMainBinding
-import com.aroman.testexcercise5.domain.PageKey
-import com.aroman.testexcercise5.domain.RedditPost
+import com.aroman.testexcercise5.domain.entities.PageKey
+import com.aroman.testexcercise5.domain.entities.RedditPost
 import com.aroman.testexcercise5.utils.leftSwipeHelper
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

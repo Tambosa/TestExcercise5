@@ -1,4 +1,4 @@
-package com.aroman.testexcercise5.domain
+package com.aroman.testexcercise5.domain.entities
 
 data class PageKey(
     val limit: Int,

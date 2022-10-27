@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.aroman.testexcercise5.databinding.ItemRedditPostBinding
-import com.aroman.testexcercise5.domain.RedditPost
+import com.aroman.testexcercise5.domain.entities.RedditPost
 
 class RedditPostsAdapter(
     private val onItemClick: (position: Int) -> Unit,

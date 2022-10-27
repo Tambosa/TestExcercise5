@@ -1,7 +1,7 @@
 package com.aroman.testexcercise5.data.remote
 
-import com.aroman.testexcercise5.domain.PageKey
-import com.aroman.testexcercise5.domain.PagedResponse
+import com.aroman.testexcercise5.domain.entities.PageKey
+import com.aroman.testexcercise5.domain.entities.PagedResponse
 import com.aroman.testexcercise5.domain.RedditRepository
 import retrofit2.Call
 

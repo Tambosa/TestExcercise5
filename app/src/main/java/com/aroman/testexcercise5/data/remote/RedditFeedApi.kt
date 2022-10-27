@@ -1,6 +1,6 @@
 package com.aroman.testexcercise5.data.remote
 
-import com.aroman.testexcercise5.domain.PagedResponse
+import com.aroman.testexcercise5.domain.entities.PagedResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
