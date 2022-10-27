@@ -12,7 +12,7 @@ class RoomLocalRedditRepositoryImpl(private val dao: RedditPostDao) : LocalReddi
     }
 
     override suspend fun checkIfSaved(post: RedditPost) =
-        dao.getPostByName(post.data.name).isEmpty()
+        dao.getPostByName(post.data.name).isNotEmpty()
 
     override suspend fun getAll(): List<RedditPost> {
         val tempList = dao.getAll()

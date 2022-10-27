@@ -57,11 +57,11 @@ class MainActivityViewModel(
     }
 
     fun checkIfSaved(post: RedditPost): Boolean {
-        var returnValue = false
-        viewModelCoroutineScope.launch {
-            returnValue = susCheckIfSaved(post)
+        var isSaved = false
+        runBlocking {
+            isSaved = susCheckIfSaved(post)
         }
-        return returnValue
+        return isSaved
     }
 
     private suspend fun susCheckIfSaved(post: RedditPost): Boolean {
