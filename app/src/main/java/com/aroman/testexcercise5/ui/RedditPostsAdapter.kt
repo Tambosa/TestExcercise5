@@ -2,7 +2,9 @@ package com.aroman.testexcercise5.ui
 
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.aroman.testexcercise5.databinding.ItemRedditPostBinding
@@ -40,8 +42,13 @@ class RedditPostsAdapter(private val onItemClick: (position: Int) -> Unit) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: RedditPost) = with(binding) {
-            title.text = item.data.title
-            selftext.text = item.data.selftext
+            setTextView(title, item.data.title)
+            setTextView(selftext, item.data.selftext)
+            setTextView(author, "Posted by u/" + item.data.author)
+            setTextView(ups, item.data.ups.toString())
+            setTextView(subreddit, "r/" + item.data.subreddit)
+            setTextView(numberOfComments, item.data.comments.toString())
+
             val imageUrl = try {
                 item.data.preview.listImage[0].source.url.replace("amp;", "")
             } catch (e: Exception) {
@@ -49,10 +56,11 @@ class RedditPostsAdapter(private val onItemClick: (position: Int) -> Unit) :
                 item.data.thumbnail
             }
             postImage.load(imageUrl)
-            author.text = "Posted by u/" + item.data.author
-            ups.text = item.data.ups.toString()
-            subreddit.text = "r/" + item.data.subreddit
-            numberOfComments.text = item.data.comments.toString()
+        }
+
+        private fun setTextView(textView: TextView, text: String) {
+            if (text.isEmpty()) textView.visibility = View.GONE
+            else textView.text = text
         }
     }
 }

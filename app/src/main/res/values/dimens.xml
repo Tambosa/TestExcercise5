@@ -2,7 +2,7 @@
 <resources>
     <dimen name="card_view_corner_radius">15dp</dimen>
     <dimen name="card_view_margin">20dp</dimen>
-    <dimen name="recycler_element_marin">8dp</dimen>
+    <dimen name="recycler_element_marin">15dp</dimen>
     <dimen name="text_size_small">12sp</dimen>
     <dimen name="text_size_medium">18sp</dimen>
     <dimen name="card_view_padding">8dp</dimen>

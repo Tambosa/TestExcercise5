@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">TestExcercise5</string>
     <string name="r_funny">r/funny</string>
+    <string name="save">Save</string>
 </resources>

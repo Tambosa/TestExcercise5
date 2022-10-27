@@ -19,6 +19,7 @@ data class RedditData(
 @Parcelize
 data class RedditPost(
     @SerializedName("data") val data: RedditPostData,
+    val isSaved: Boolean = false
 ) : Parcelable
 
 @Parcelize
