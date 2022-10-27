@@ -89,4 +89,14 @@ class MainActivityViewModel(
             localRepo.savePost(post)
         }
     }
+
+    fun deletePost(post: RedditPost) {
+        viewModelCoroutineScope.launch { susDeletePost(post) }
+    }
+
+    private suspend fun susDeletePost(post: RedditPost) {
+        return withContext(Dispatchers.IO) {
+            localRepo.deletePost(post)
+        }
+    }
 }

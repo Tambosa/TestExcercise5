@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.aroman.testexcercise5.databinding.ActivityMainBinding
 import com.aroman.testexcercise5.domain.PageKey
 import com.aroman.testexcercise5.domain.RedditPost
+import com.aroman.testexcercise5.utils.leftSwipeHelper
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -103,6 +104,12 @@ class MainActivity : AppCompatActivity() {
             it.visibility = View.INVISIBLE
             binding.buttonRemote.isEnabled = true
             binding.buttonRemote.visibility = View.VISIBLE
+
+            binding.redditRecyclerView.leftSwipeHelper { viewHolder ->
+                viewModel.deletePost(redditPostsAdapter.getData()[viewHolder.adapterPosition])
+                redditPostsAdapter.removeItemFromData(viewHolder.adapterPosition)
+                redditPostsAdapter.notifyItemRemoved(viewHolder.adapterPosition)
+            }
         }
 
         binding.buttonRemote.setOnClickListener {
@@ -113,6 +120,7 @@ class MainActivity : AppCompatActivity() {
             it.visibility = View.INVISIBLE
             binding.buttonLocal.isEnabled = true
             binding.buttonLocal.visibility = View.VISIBLE
+            binding.redditRecyclerView.leftSwipeHelper {}
         }
     }
 
