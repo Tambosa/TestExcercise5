@@ -1,4 +1,4 @@
-package com.aroman.testexcercise5.data
+package com.aroman.testexcercise5.data.remote
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

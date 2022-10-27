@@ -1,4 +1,4 @@
-package com.aroman.testexcercise5.data
+package com.aroman.testexcercise5.data.remote
 
 import com.aroman.testexcercise5.domain.PagedResponse
 import retrofit2.Call

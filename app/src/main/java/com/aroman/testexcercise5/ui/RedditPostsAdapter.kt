@@ -1,5 +1,7 @@
 package com.aroman.testexcercise5.ui
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +12,10 @@ import coil.load
 import com.aroman.testexcercise5.databinding.ItemRedditPostBinding
 import com.aroman.testexcercise5.domain.RedditPost
 
-class RedditPostsAdapter(private val onItemClick: (position: Int) -> Unit) :
+class RedditPostsAdapter(
+    private val onItemClick: (position: Int) -> Unit,
+    private val onSaveButtonClick: (position: Int) -> Unit
+) :
     RecyclerView.Adapter<RedditPostsAdapter.RedditPostViewHolder>() {
 
     private val data = mutableListOf<RedditPost>()
@@ -35,10 +40,14 @@ class RedditPostsAdapter(private val onItemClick: (position: Int) -> Unit) :
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            )
+            ),
+            onSaveButtonClick
         )
 
-    inner class RedditPostViewHolder(private val binding: ItemRedditPostBinding) :
+    inner class RedditPostViewHolder(
+        private val binding: ItemRedditPostBinding,
+        private val onSaveButtonClick: (position: Int) -> Unit
+    ) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: RedditPost) = with(binding) {
@@ -56,6 +65,15 @@ class RedditPostsAdapter(private val onItemClick: (position: Int) -> Unit) :
                 item.data.thumbnail
             }
             postImage.load(imageUrl)
+
+            if (item.isSaved) {
+                buttonSave.text = "saved"
+                buttonSave.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FF5700"))
+            } else{
+                buttonSave.text = "save"
+                buttonSave.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#A5A4A4"))
+                buttonSave.setOnClickListener { onSaveButtonClick(adapterPosition) }
+            }
         }
 
         private fun setTextView(textView: TextView, text: String) {

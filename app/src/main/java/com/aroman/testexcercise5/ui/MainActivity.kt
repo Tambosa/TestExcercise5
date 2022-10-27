@@ -9,15 +9,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.aroman.testexcercise5.databinding.ActivityMainBinding
 import com.aroman.testexcercise5.domain.PageKey
+import com.aroman.testexcercise5.domain.RedditPost
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainActivityViewModel by viewModel()
 
-    private val redditPostsAdapter = RedditPostsAdapter { position ->
+    private val redditPostsAdapter = RedditPostsAdapter({ position ->
         onItemClick(position)
-    }
+    }, { position ->
+        onSaveButtonClick(position)
+    })
     private var isLoading = false
     private var after: String = ""
 
@@ -33,12 +36,18 @@ class MainActivity : AppCompatActivity() {
     private fun initViewModel() {
         viewModel.pageList.observe(this) {
             Log.d("@@@", it.data.children.toString())
+            val redditPostsList = it.data.children
+            for (post in redditPostsList) {
+                post.isSaved = checkIfSaved(post)
+            }
             redditPostsAdapter.addData(it.data.children)
             after = it.data.after
             isLoading = false
         }
         viewModel.getPage(getStartKey())
     }
+
+    private fun checkIfSaved(post: RedditPost) = viewModel.checkIfSaved(post)
 
     private fun initRecyclerView() {
         binding.redditRecyclerView.layoutManager = LinearLayoutManager(this)
@@ -75,6 +84,12 @@ class MainActivity : AppCompatActivity() {
             Uri.parse("https://www.reddit.com" + redditPostsAdapter.getData()[position].data.url)
         )
         startActivity(browserIntent)
+    }
+
+    private fun onSaveButtonClick(position: Int) {
+        redditPostsAdapter.getData()[position].isSaved = true
+        redditPostsAdapter.notifyItemChanged(position)
+        viewModel.savePost(redditPostsAdapter.getData()[position])
     }
 
     companion object {
