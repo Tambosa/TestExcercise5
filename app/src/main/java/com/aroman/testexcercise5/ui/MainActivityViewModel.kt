@@ -9,9 +9,8 @@ import com.aroman.testexcercise5.domain.entities.PageKey
 import com.aroman.testexcercise5.domain.entities.PagedResponse
 import com.aroman.testexcercise5.domain.entities.RedditData
 import com.aroman.testexcercise5.domain.entities.RedditPost
-import io.reactivex.android.schedulers.AndroidSchedulers
+import com.aroman.testexcercise5.utils.applySchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 
 class MainActivityViewModel(
     private val remoteRepo: RedditRepository,
@@ -26,32 +25,26 @@ class MainActivityViewModel(
 
     fun getLocalPage() {
         localRepo.getAll()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .applySchedulers()
             .subscribe({ result ->
                 _liveData.postValue(PagedResponse(RedditData("", result, "")))
-            }, {}).let {
-                compositeDisposable.add(it)
-            }
+            }, {})
+            .let { compositeDisposable.add(it) }
     }
 
     fun savePost(post: RedditPost) {
         localRepo.savePost(post)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({}, {}).let {
-                compositeDisposable.add(it)
-            }
+            .applySchedulers()
+            .subscribe({}, {})
+            .let { compositeDisposable.add(it) }
     }
 
     fun deletePost(post: RedditPost) {
         localRepo.deletePost(post)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .applySchedulers()
             .subscribe({
-            }, {}).let {
-                compositeDisposable.add(it)
-            }
+            }, {})
+            .let { compositeDisposable.add(it) }
     }
 
     //endregion
@@ -59,27 +52,22 @@ class MainActivityViewModel(
 
     fun getPage(pageKey: PageKey) {
         remoteRepo.getPopularMovies(pageKey)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .applySchedulers()
             .subscribe({ response ->
                 setIsSavedValue(response)
                 _liveData.postValue(response)
             }, {})
-            .let {
-                compositeDisposable.add(it)
-            }
+            .let { compositeDisposable.add(it) }
     }
 
     private fun setIsSavedValue(response: PagedResponse) {
         response.data.children.forEach { redditPost ->
             localRepo.checkIfSaved(redditPost)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .applySchedulers()
                 .subscribe({
                     redditPost.isSaved = it
-                }, {}).let {
-                    compositeDisposable.add(it)
-                }
+                }, {})
+                .let { compositeDisposable.add(it) }
         }
     }
 
