@@ -1,10 +1,12 @@
 package com.aroman.testexcercise5.domain
 
 import com.aroman.testexcercise5.domain.entities.RedditPost
+import io.reactivex.Completable
+import io.reactivex.Single
 
 interface LocalRedditRepository {
-    suspend fun savePost(post: RedditPost)
-    suspend fun deletePost(post: RedditPost)
-    suspend fun checkIfSaved(post: RedditPost): Boolean
-    suspend fun getAll(): List<RedditPost>
+    fun savePost(post: RedditPost): Completable
+    fun deletePost(post: RedditPost): Completable
+    fun checkIfSaved(post: RedditPost): Single<Boolean>
+    fun getAll(): Single<List<RedditPost>>
 }

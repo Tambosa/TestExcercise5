@@ -1,33 +1,23 @@
 package com.aroman.testexcercise5.data.local
 
-import com.aroman.testexcercise5.domain.*
+import com.aroman.testexcercise5.domain.LocalRedditRepository
 import com.aroman.testexcercise5.domain.entities.*
 
 class RoomLocalRedditRepositoryImpl(private val dao: RedditPostDao) : LocalRedditRepository {
-    override suspend fun savePost(post: RedditPost) {
-        dao.insertNewPost(localToRoom(post))
-    }
 
-    override suspend fun deletePost(post: RedditPost) {
-        dao.deletePost(localToRoom(post))
-    }
+    override fun getAll() = dao.getAll().map { roomToLocal(it) }
 
-    override suspend fun checkIfSaved(post: RedditPost) =
-        dao.getPostByName(post.data.name).isNotEmpty()
+    override fun savePost(post: RedditPost) = dao.insertNewPost(localToRoom(post))
 
-    override suspend fun getAll(): List<RedditPost> {
-        val tempList = dao.getAll()
-        val returnList = mutableListOf<RedditPost>()
-        for (redditPostEntity in tempList) {
-            returnList.add(roomToLocal(redditPostEntity))
-        }
-        return returnList
-    }
+    override fun deletePost(post: RedditPost) = dao.deletePost(localToRoom(post))
+
+    override fun checkIfSaved(post: RedditPost) =
+        dao.getPostByName(post.data.name).map { it.isNotEmpty() }
 
     private fun localToRoom(local: RedditPost): RedditPostEntity {
         return RedditPostEntity(
             name = local.data.name,
-            isSaved = local.isSaved,
+            isSaved = true,
             subreddit = local.data.subreddit,
             title = local.data.title,
             author = local.data.author,
@@ -44,21 +34,27 @@ class RoomLocalRedditRepositoryImpl(private val dao: RedditPostDao) : LocalReddi
         )
     }
 
-    private fun roomToLocal(room: RedditPostEntity): RedditPost {
-        return RedditPost(
-            isSaved = room.isSaved,
-            data = RedditPostData(
-                name = room.name,
-                subreddit = room.subreddit,
-                title = room.title,
-                author = room.author,
-                ups = room.ups,
-                thumbnail = room.thumbnail,
-                url = room.url,
-                comments = room.comments,
-                selftext = room.selfText,
-                preview = ImagePreview(listOf(RedditImage(ImageDetails(room.image_url))))
+    private fun roomToLocal(roomList: List<RedditPostEntity>): List<RedditPost> {
+        val returnList = mutableListOf<RedditPost>()
+        for (redditPost in roomList) {
+            returnList.add(
+                RedditPost(
+                    isSaved = redditPost.isSaved,
+                    data = RedditPostData(
+                        name = redditPost.name,
+                        subreddit = redditPost.subreddit,
+                        title = redditPost.title,
+                        author = redditPost.author,
+                        ups = redditPost.ups,
+                        thumbnail = redditPost.thumbnail,
+                        url = redditPost.url,
+                        comments = redditPost.comments,
+                        selftext = redditPost.selfText,
+                        preview = ImagePreview(listOf(RedditImage(ImageDetails(redditPost.image_url))))
+                    )
+                )
             )
-        )
+        }
+        return returnList
     }
 }

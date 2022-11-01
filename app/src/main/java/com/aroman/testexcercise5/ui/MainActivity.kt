@@ -39,19 +39,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun initViewModel() {
         viewModel.pageList.observe(this) {
-            Log.d("@@@", it.data.children.toString())
-            val redditPostsList = it.data.children
-            for (post in redditPostsList) {
-                post.isSaved = checkIfSaved(post)
-            }
             redditPostsAdapter.addData(it.data.children)
             after = it.data.after
             isLoading = false
         }
         viewModel.getPage(getStartKey())
     }
-
-    private fun checkIfSaved(post: RedditPost) = viewModel.checkIfSaved(post)
 
     private fun initRecyclerView() {
         binding.redditRecyclerView.layoutManager = LinearLayoutManager(this)
