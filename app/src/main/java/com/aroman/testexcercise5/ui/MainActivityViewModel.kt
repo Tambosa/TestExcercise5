@@ -20,9 +20,9 @@ class MainActivityViewModel(
     private val _liveData: MutableLiveData<PagedResponse> = MutableLiveData()
     val pageList: LiveData<PagedResponse> = _liveData
 
-    //region local repo
-
     private val compositeDisposable = CompositeDisposable()
+
+    //region local repo
 
     fun getLocalPage() {
         localRepo.getAll()
@@ -62,7 +62,7 @@ class MainActivityViewModel(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ response ->
-                onRemoteRepoResponse(response)
+                setIsSavedValue(response)
                 _liveData.postValue(response)
             }, {})
             .let {
@@ -70,7 +70,7 @@ class MainActivityViewModel(
             }
     }
 
-    private fun onRemoteRepoResponse(response: PagedResponse) {
+    private fun setIsSavedValue(response: PagedResponse) {
         response.data.children.forEach { redditPost ->
             localRepo.checkIfSaved(redditPost)
                 .subscribeOn(Schedulers.io())
