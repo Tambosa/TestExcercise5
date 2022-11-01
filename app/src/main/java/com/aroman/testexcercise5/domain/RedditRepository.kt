@@ -2,8 +2,8 @@ package com.aroman.testexcercise5.domain
 
 import com.aroman.testexcercise5.domain.entities.PageKey
 import com.aroman.testexcercise5.domain.entities.PagedResponse
-import retrofit2.Call
+import io.reactivex.Observable
 
 interface RedditRepository {
-    fun getPopularMovies(key: PageKey): Call<PagedResponse>
+    fun getPopularMovies(key: PageKey): Observable<PagedResponse>
 }
