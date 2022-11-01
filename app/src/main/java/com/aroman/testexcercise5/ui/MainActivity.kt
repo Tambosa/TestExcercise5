@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         onSaveButtonClick(position)
     })
     private var isLoading = false
+    private var isOnline = true
     private var after: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,7 +63,7 @@ class MainActivity : AppCompatActivity() {
                 val totalItemCount = layoutManager.itemCount
                 val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
 
-                if (!isLoading) {
+                if (!isLoading && isOnline) {
                     if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0 && totalItemCount >= TOTAL_PAGES) {
                         isLoading = true
                         loadNextPage()
@@ -97,6 +98,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initOnOffButtons() {
         binding.buttonLocal.setOnClickListener {
+            isOnline = false
             Log.d("@@@", "buttonLocal: ")
             redditPostsAdapter.clearData()
             viewModel.getLocalPage()
@@ -113,6 +115,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.buttonRemote.setOnClickListener {
+            isOnline = true
             Log.d("@@@", "buttonRemote: ")
             redditPostsAdapter.clearData()
             viewModel.getPage(getStartKey())

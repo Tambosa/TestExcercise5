@@ -50,17 +50,6 @@
             app:layout_constraintTop_toBottomOf="@id/subreddit"
             tools:text="Is it crazy?" />
 
-        <TextView
-            android:id="@+id/selftext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/recycler_element_marin"
-            android:textColor="@color/text_color_light"
-            android:textSize="@dimen/text_size_medium"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title"
-            tools:text="It seems like a basic functionality in an app and yet I don't see a straightforward way to do this. What am I missing here?" />
-
         <ImageView
             android:id="@+id/image_upvote"
             android:layout_width="wrap_content"
@@ -82,12 +71,27 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="244" />
 
+        <TextView
+            android:id="@+id/selftext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/recycler_element_marin"
+            android:layout_marginBottom="@dimen/recycler_element_marin"
+            android:paddingStart="@dimen/recycler_element_marin"
+            android:paddingEnd="@dimen/recycler_element_marin"
+            android:textColor="@color/text_color_light"
+            android:textSize="@dimen/text_size_medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            tools:text="It seems like a basic functionality in an app and yet I don't see a straightforward way to do this. What am I missing here?" />
+
         <com.aroman.testexcercise5.utils.ProportionalImageView
             android:id="@+id/post_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/recycler_element_marin"
             android:adjustViewBounds="true"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/selftext"
@@ -97,6 +101,8 @@
             android:id="@+id/linear_layout_footer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/recycler_element_marin"
+            android:layout_marginBottom="@dimen/recycler_element_marin"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -107,7 +113,8 @@
                 android:id="@+id/button_save"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/recycler_element_marin"
+                android:layout_marginStart="@dimen/recycler_element_marin"
+                android:layout_marginEnd="@dimen/recycler_element_marin"
                 android:layout_weight="3"
                 android:backgroundTint="@color/text_color_light"
                 android:text="@string/save" />
@@ -117,7 +124,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="@dimen/recycler_element_marin"
+                android:layout_marginStart="@dimen/recycler_element_marin"
+                android:layout_marginEnd="@dimen/recycler_element_marin"
                 android:layout_weight="1"
                 android:src="@drawable/ic_baseline_comment_24" />
 
@@ -125,7 +133,8 @@
                 android:id="@+id/number_of_comments"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/recycler_element_marin"
+                android:layout_marginStart="@dimen/recycler_element_marin"
+                android:layout_marginEnd="@dimen/recycler_element_marin"
                 android:layout_weight="1"
                 android:textColor="@color/text_color_light"
                 android:textSize="@dimen/text_size_medium"

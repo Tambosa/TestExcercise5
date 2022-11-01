@@ -26,10 +26,10 @@
             android:backgroundTint="@color/text_color_light"
             android:clickable="true"
             android:enabled="false"
-            android:visibility="invisible"
             android:focusable="true"
             android:text="@string/online"
-            android:textColor="@color/background_dark" />
+            android:textColor="@color/background_dark"
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/main_title"
@@ -61,10 +61,8 @@
         android:id="@+id/reddit_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="180dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linear_layout_header"
         tools:listitem="@layout/item_reddit_post" />
 </androidx.constraintlayout.widget.ConstraintLayout>
