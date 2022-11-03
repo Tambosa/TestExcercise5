@@ -1,11 +1,10 @@
 package com.aroman.testexcercise5.ui
 
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -14,7 +13,7 @@ import com.aroman.testexcercise5.domain.entities.RedditPost
 
 class RedditPostsAdapter(
     private val onItemClick: (position: Int) -> Unit,
-    private val onSaveButtonClick: (position: Int) -> Unit
+    private val onSaveButtonClick: (redditPostViewHolder: RedditPostsAdapter.RedditPostViewHolder) -> CompoundButton.OnCheckedChangeListener
 ) :
     RecyclerView.Adapter<RedditPostsAdapter.RedditPostViewHolder>() {
 
@@ -50,7 +49,7 @@ class RedditPostsAdapter(
 
     inner class RedditPostViewHolder(
         private val binding: ItemRedditPostBinding,
-        private val onSaveButtonClick: (position: Int) -> Unit
+        private val onSaveButtonClick: (redditPostViewHolder: RedditPostsAdapter.RedditPostViewHolder) -> CompoundButton.OnCheckedChangeListener
     ) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -69,15 +68,8 @@ class RedditPostsAdapter(
                 item.data.thumbnail
             }
             postImage.load(imageUrl)
-
-            if (item.isSaved) {
-                buttonSave.text = "saved"
-                buttonSave.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FF5700"))
-            } else {
-                buttonSave.text = "save"
-                buttonSave.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#A5A4A4"))
-                buttonSave.setOnClickListener { onSaveButtonClick(adapterPosition) }
-            }
+            buttonSave.setOnCheckedChangeListener(onSaveButtonClick(this@RedditPostViewHolder))
+            buttonSave.isChecked = item.isSaved
         }
 
         private fun setTextView(textView: TextView, text: String) {

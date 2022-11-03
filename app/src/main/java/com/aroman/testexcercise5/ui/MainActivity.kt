@@ -5,13 +5,13 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.aroman.testexcercise5.R
 import com.aroman.testexcercise5.databinding.ActivityMainBinding
 import com.aroman.testexcercise5.domain.entities.PageKey
-import com.aroman.testexcercise5.domain.entities.RedditPost
-import com.aroman.testexcercise5.utils.leftSwipeHelper
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -20,8 +20,8 @@ class MainActivity : AppCompatActivity() {
 
     private val redditPostsAdapter = RedditPostsAdapter({ position ->
         onItemClick(position)
-    }, { position ->
-        onSaveButtonClick(position)
+    }, { redditPostViewHolder ->
+        onSaveButtonClick(redditPostViewHolder)
     })
     private var isLoading = false
     private var isOnline = true
@@ -83,10 +83,18 @@ class MainActivity : AppCompatActivity() {
         startActivity(browserIntent)
     }
 
-    private fun onSaveButtonClick(position: Int) {
-        redditPostsAdapter.getData()[position].isSaved = true
-        redditPostsAdapter.notifyItemChanged(position)
-        viewModel.savePost(redditPostsAdapter.getData()[position])
+    private fun onSaveButtonClick(redditPostView: RedditPostsAdapter.RedditPostViewHolder): CompoundButton.OnCheckedChangeListener {
+        return CompoundButton.OnCheckedChangeListener { toggleButton, isChecked ->
+            if (isChecked) {
+                redditPostsAdapter.getData()[redditPostView.adapterPosition].isSaved = true
+                toggleButton.background = getDrawable(R.drawable.ic_baseline_favorite_24)
+                viewModel.savePost(redditPostsAdapter.getData()[redditPostView.adapterPosition])
+            } else {
+                redditPostsAdapter.getData()[redditPostView.adapterPosition].isSaved = false
+                toggleButton.background = getDrawable(R.drawable.ic_baseline_favorite_border_24)
+                viewModel.deletePost(redditPostsAdapter.getData()[redditPostView.adapterPosition])
+            }
+        }
     }
 
     private fun initOnOffButtons() {
@@ -99,12 +107,6 @@ class MainActivity : AppCompatActivity() {
             it.visibility = View.INVISIBLE
             binding.buttonRemote.isEnabled = true
             binding.buttonRemote.visibility = View.VISIBLE
-
-            binding.redditRecyclerView.leftSwipeHelper { viewHolder ->
-                viewModel.deletePost(redditPostsAdapter.getData()[viewHolder.adapterPosition])
-                redditPostsAdapter.removeItemFromData(viewHolder.adapterPosition)
-                redditPostsAdapter.notifyItemRemoved(viewHolder.adapterPosition)
-            }
         }
 
         binding.buttonRemote.setOnClickListener {
@@ -116,7 +118,6 @@ class MainActivity : AppCompatActivity() {
             it.visibility = View.INVISIBLE
             binding.buttonLocal.isEnabled = true
             binding.buttonLocal.visibility = View.VISIBLE
-            binding.redditRecyclerView.leftSwipeHelper {}
         }
     }
 

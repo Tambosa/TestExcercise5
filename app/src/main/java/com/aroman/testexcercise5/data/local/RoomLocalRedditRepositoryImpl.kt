@@ -17,7 +17,7 @@ class RoomLocalRedditRepositoryImpl(private val dao: RedditPostDao) : LocalReddi
     private fun localToRoom(local: RedditPost): RedditPostEntity {
         return RedditPostEntity(
             name = local.data.name,
-            isSaved = true,
+            isSaved = local.isSaved,
             subreddit = local.data.subreddit,
             title = local.data.title,
             author = local.data.author,

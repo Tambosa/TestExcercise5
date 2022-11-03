@@ -4,4 +4,6 @@
     <string name="save">Save</string>
     <string name="online">online</string>
     <string name="offline">offline</string>
+    <string name="favourites">favourites</string>
+    <string name="home">home</string>
 </resources>

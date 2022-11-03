@@ -8,4 +8,6 @@
     <dimen name="card_view_padding">8dp</dimen>
     <dimen name="text_size_large">24sp</dimen>
     <dimen name="recycler_margin_vertical">30dp</dimen>
+    <dimen name="favourite_button_margin">75dp</dimen>
+    <dimen name="favourite_button_size">40dp</dimen>
 </resources>
