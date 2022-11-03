@@ -3,6 +3,7 @@ package com.aroman.testexcercise5.ui
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.SystemClock
 import android.util.Log
 import android.view.View
 import android.widget.CompoundButton
@@ -84,16 +85,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onSaveButtonClick(redditPostView: RedditPostsAdapter.RedditPostViewHolder): CompoundButton.OnCheckedChangeListener {
+        var lastClickTime = 0L
+        val debounceTime = 800L
+
         return CompoundButton.OnCheckedChangeListener { toggleButton, isChecked ->
-            if (isChecked) {
-                redditPostsAdapter.getData()[redditPostView.adapterPosition].isSaved = true
-                toggleButton.background = getDrawable(R.drawable.ic_baseline_favorite_24)
-                viewModel.savePost(redditPostsAdapter.getData()[redditPostView.adapterPosition])
-            } else {
-                redditPostsAdapter.getData()[redditPostView.adapterPosition].isSaved = false
-                toggleButton.background = getDrawable(R.drawable.ic_baseline_favorite_border_24)
-                viewModel.deletePost(redditPostsAdapter.getData()[redditPostView.adapterPosition])
+            if (SystemClock.elapsedRealtime() - lastClickTime > debounceTime) {
+                lastClickTime = 0L
+                if (isChecked) {
+                    redditPostsAdapter.getData()[redditPostView.adapterPosition].isSaved = true
+                    toggleButton.background = getDrawable(R.drawable.ic_baseline_favorite_24)
+                    viewModel.savePost(redditPostsAdapter.getData()[redditPostView.adapterPosition])
+                } else {
+                    redditPostsAdapter.getData()[redditPostView.adapterPosition].isSaved = false
+                    toggleButton.background = getDrawable(R.drawable.ic_baseline_favorite_border_24)
+                    viewModel.deletePost(redditPostsAdapter.getData()[redditPostView.adapterPosition])
+                }
             }
+            lastClickTime = SystemClock.elapsedRealtime()
         }
     }
 
