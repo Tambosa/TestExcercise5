@@ -28,8 +28,6 @@ class RedditPostsAdapter(
 
     fun clearData() = data.clear()
 
-    fun removeItemFromData(position: Int) = data.removeAt(position)
-
     override fun onBindViewHolder(holder: RedditPostViewHolder, position: Int) {
         holder.bind(data[position])
         holder.itemView.setOnClickListener { onItemClick(position) }
