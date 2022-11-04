@@ -1,5 +1,7 @@
 package com.aroman.testexcercise5.ui
 
+import android.animation.ArgbEvaluator
+import android.animation.ValueAnimator
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -92,16 +94,27 @@ class MainActivity : AppCompatActivity() {
                 lastClickTime = 0L
                 if (isChecked) {
                     redditPostsAdapter.getData()[redditPostView.adapterPosition].isSaved = true
-                    toggleButton.background = getDrawable(R.drawable.ic_baseline_favorite_24)
                     viewModel.savePost(redditPostsAdapter.getData()[redditPostView.adapterPosition])
+                    likeAnimation(toggleButton, R.color.text_color_light, R.color.reddit_active)
                 } else {
                     redditPostsAdapter.getData()[redditPostView.adapterPosition].isSaved = false
-                    toggleButton.background = getDrawable(R.drawable.ic_baseline_favorite_border_24)
                     viewModel.deletePost(redditPostsAdapter.getData()[redditPostView.adapterPosition])
+                    likeAnimation(toggleButton, R.color.reddit_active, R.color.text_color_light)
                 }
             }
             lastClickTime = SystemClock.elapsedRealtime()
         }
+    }
+
+    private fun likeAnimation(toggleButton: CompoundButton, from: Int, to: Int) {
+        ValueAnimator().apply {
+            setIntValues(getColor(from), getColor(to))
+            setEvaluator(ArgbEvaluator())
+            addUpdateListener {
+                toggleButton.background.setTint(it.animatedValue as Int)
+            }
+            duration = 600
+        }.start()
     }
 
     private fun initOnOffButtons() {
