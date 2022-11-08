@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.swipeRefreshContainer.isRefreshing = true
         initRecyclerView()
         initViewModel()
         initOnOffButtons()
@@ -44,6 +45,7 @@ class MainActivity : AppCompatActivity() {
             redditPostsAdapter.addData(it.data.children)
             after = it.data.after
             isLoading = false
+            binding.swipeRefreshContainer.isRefreshing = false
         }
         viewModel.getPage(getStartKey())
     }
@@ -66,6 +68,14 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+        initSwipeRefresh()
+    }
+
+    private fun initSwipeRefresh() {
+        binding.swipeRefreshContainer.setOnRefreshListener {
+            redditPostsAdapter.clearData()
+            viewModel.getPage(getStartKey())
+        }
     }
 
     private fun loadNextPage() {
