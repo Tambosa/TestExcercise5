@@ -50,7 +50,8 @@ class RoomLocalRedditRepositoryImpl(private val dao: RedditPostDao) : LocalReddi
                         url = redditPost.url,
                         comments = redditPost.comments,
                         selftext = redditPost.selfText,
-                        preview = ImagePreview(listOf(RedditImage(ImageDetails(redditPost.image_url))))
+                        preview = ImagePreview(listOf(RedditImage(ImageDetails(redditPost.image_url)))),
+                        is_video = false
                     )
                 )
             )

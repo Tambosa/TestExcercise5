@@ -55,6 +55,7 @@ class MainActivityViewModel(
             .applySchedulers()
             .subscribe({ response ->
                 setIsSavedValue(response)
+                filterVideos(response)
                 _liveData.postValue(response)
             }, {})
             .let { compositeDisposable.add(it) }
@@ -69,6 +70,14 @@ class MainActivityViewModel(
                 }, {})
                 .let { compositeDisposable.add(it) }
         }
+    }
+
+    private fun filterVideos(response: PagedResponse) {
+        val childrenWithoutVideos = mutableListOf<RedditPost>()
+        response.data.children.forEach { redditPost ->
+            if (!redditPost.data.is_video) childrenWithoutVideos.add(redditPost)
+        }
+        response.data.children = childrenWithoutVideos
     }
 
     //endregion

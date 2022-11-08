@@ -12,7 +12,7 @@ data class PagedResponse(
 @Parcelize
 data class RedditData(
     @SerializedName("after") val after: String,
-    @SerializedName("children") val children: List<RedditPost>,
+    @SerializedName("children") var children: List<RedditPost>,
     @SerializedName("before") val before: String,
 ) : Parcelable
 
@@ -34,6 +34,7 @@ data class RedditPostData(
     @SerializedName("permalink") val url: String,
     @SerializedName("num_comments") val comments: Int,
     @SerializedName("preview") val preview: ImagePreview,
+    @SerializedName("is_video") val is_video: Boolean,
 ) : Parcelable
 
 @Parcelize
