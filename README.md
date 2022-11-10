@@ -14,6 +14,7 @@ https://user-images.githubusercontent.com/73552496/200781638-f0ada050-ce55-4319-
 ### Techs
 
 Для реализации проекта использовались следующие технологии
+- MVVM + LiveData
 - Retrofit
 - Room
 - Koin
